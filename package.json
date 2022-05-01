@@ -1,0 +1,19 @@
+{
+  "name": "workshop-api",
+  "version": "1.0.0",
+  "description": "Step by step video tutorial to using ForrestJS and build a REST and GraphQL API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/forrestjs/workshop-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/forrestjs/workshop-api/issues"
+  },
+  "homepage": "https://github.com/forrestjs/workshop-api#readme"
+}

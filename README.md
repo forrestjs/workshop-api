@@ -11,6 +11,12 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
   - [Connect to Adminer](#connect-to-adminer)
   - [Connect to PSQL](#connect-to-psql)
 - [Folder Structure, Features, and Services](#folder-structure-features-and-services)
+  - [The Project's Root](#the-projects-root)
+  - [The Project's Manifest](#the-projects-manifest)
+  - [The Source Folder](#the-source-folder)
+  - [The App's Manifest](#the-apps-manifest)
+  - [Services & Features](#services--features)
+- Run a ForrestJS App with Nodemon
 - Validating the NodeJS Environment
 - Add `service-pg` and connect to Postgres
 - Add `service-pg-schema` and scaffold the `pg-schema` _Feature_
@@ -140,7 +146,13 @@ Once you go through, you can then structure your project this way:
     - services/
 ```
 
+### Videos
+
+- [Walk Through a ForrestJS Project Structure (4:43)](./videos/folder-structure.mp4)
+
 ### The Project's Root
+
+> The **root folder** is where you store your `package.json` file.
 
 In the root folder of a ForrestJS/NodeJS App you find mostly configuration and documentation files:
 
