@@ -20,6 +20,7 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
   - [Add ForrestJS and Nodemon](#add-forrestjs-and-nodemon)
   - [Add the Start Script](#add-the-start-script)
   - [Run a ForrestJS App](#run-a-forrestjs-app)
+- [Setup Prettier](#setup-prettier)
 - Validating the NodeJS Environment
 - Add `service-pg` and connect to Postgres
 - Add `service-pg-schema` and scaffold the `pg-schema` _Feature_
@@ -42,7 +43,7 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
 
 ## Intro To The Workshop
 
-[[ TO BE COMPLETED ]]
+[[TO BE COMPLETED]]
 
 ---
 
@@ -171,7 +172,7 @@ The file `package.json` should contain all the information that are needed to re
 - dependencies
 - commands
 
-I suggest you always provide an `npm start` interface for running your project in **development mode**. 
+I suggest you always provide an `npm start` interface for running your project in **development mode**.
 
 > **Remember:** your developers are the first and most affectionated users of your App!
 
@@ -199,7 +200,7 @@ That's because it holds a few **declararive** responsibilities:
 
 The beauty of a ForrestJS App lays in its composability and interoperability of Features and Services.
 
-A **Feature** represents a bit of business value, something that your customer is happy to pay for. 
+A **Feature** represents a bit of business value, something that your customer is happy to pay for.
 
 > The capability of listing and creating Todos is a good Feature.
 
@@ -259,17 +260,54 @@ Here is a basic ForrestJS App Manifest scaffold that you can paste into your `sr
 
 ```js
 // Import Core, Services, and Features
-const forrestjs = require('@forrestjs/core');
+const forrestjs = require("@forrestjs/core");
 
 // Kick off a ForrestJS App
 const app = forrestjs.run();
 
 // Handle the Boot of the App
-app.then(() => console.log('The app started'));
+app.then(() => console.log("The app started"));
 app.catch(console.error);
 ```
 
 👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/run-with-nodemon/src/index.js)
+
+---
+
+## Setup Prettier
+
+[Prettier][prettier] is an _opinionated code formatter_ that makes it easier to produce readable and congruent source code.
+
+You can install the extension to [VSCode][vscode] here:  
+https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
+
+Then you can setup your rules in the `.prettierc` file:
+
+```json
+{
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false
+}
+```
+
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/prettierc/.prettierc)
+
+And finally activate the on-save hook in your [VSCode][vscode] settings `.vscode/settings.json`:
+
+```json
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.eol": "\n"
+}
+```
+
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/prettierc/.vscode/settings.json)
+
+### Videos
+
+- [Setup Prettier (2:04)](./videos/prettier.mp4)
 
 ---
 
@@ -284,3 +322,4 @@ app.catch(console.error);
 [ts]: https://www.typescriptlang.org/
 [nm]: https://nodemon.io/
 [fjs]: https://forrestjs.github.io
+[prettier]: https://prettier.io/
