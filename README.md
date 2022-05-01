@@ -58,6 +58,11 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
 
 We can run both services using [Docker-Compose][dkc] and make the commands a bit easier to write in our console by describing them in a [Makefile][mkf].
 
+### Videos
+
+- [Setup Postgres With Docker (3:12)](./videos/docker-compose-postgres.mp4)
+- [Login to the Adminer web interface (1:33)](./videos/docker-compose-adminer.mp4)
+
 ### Project's API
 
 The Project's CLI API are:
