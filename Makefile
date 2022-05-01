@@ -14,3 +14,6 @@ clean:
 	
 psql:
 	@docker-compose exec postgres psql -U $(pg_user) $(pg_password)
+
+logs:
+	@docker-compose logs -f postgres
