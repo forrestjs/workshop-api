@@ -5,16 +5,15 @@ const envalid = require("envalid");
 // Validate the Environment
 const env = envalid.cleanEnv(process.env, {
   NODE_ENV: envalid.str({
+    desc: "How is node running?",
     choices: ["development", "production"],
     default: "development",
   }),
   PGSTRING: envalid.url({
-    desc: "PostgreSQL connection string",
+    desc: "PostgreSQL Connection String",
     default: "postgres://postgres:postgres@postgres:5432/postgres",
   }),
 });
-
-// Just temporary code...
 console.log(env);
 
 // Kick off a ForrestJS App

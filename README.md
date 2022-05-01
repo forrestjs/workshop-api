@@ -21,7 +21,10 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
   - [Add the Start Script](#add-the-start-script)
   - [Run a ForrestJS App](#run-a-forrestjs-app)
 - [Setup Prettier](#setup-prettier)
-- Validating the NodeJS Environment
+- [Validating the NodeJS Environment](#validating-the-nodejs-environment)
+  - [Add Envalid & Scaffold](#add-envalid--scaffold)
+  - [Validate NODE_ENV](#validate-nodeenv)
+  - [Validate PGSTRING](#validate-pgstring)
 - Add `service-pg` and connect to Postgres
 - Add `service-pg-schema` and scaffold the `pg-schema` _Feature_
 - Use `pg-schema` to build the TodoApp tables
@@ -68,7 +71,7 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
 
 We can run both services using [Docker-Compose][dkc] and make the commands a bit easier to write in our console by describing them in a [Makefile][mkf].
 
-### Videos
+### 🍿 Videos
 
 - [Setup Postgres With Docker (3:12)](./videos/docker-compose-postgres.mp4)
 - [Login to the Adminer web interface (1:33)](./videos/docker-compose-adminer.mp4)
@@ -150,7 +153,7 @@ Once you go through, you can then structure your project this way:
     - services/
 ```
 
-### Videos
+### 🍿 Videos
 
 - [Walk Through a ForrestJS Project Structure (4:43)](./videos/folder-structure.mp4)
 
@@ -212,7 +215,7 @@ A **Service** represents a bit of infrastructural value, something that _YOU_ ne
 
 ## Run a ForrestJS App with Nodemon
 
-### Videos
+### 🍿 Videos
 
 - [Install dependencies from NPM (1:13)](./videos/run-forrest-add-dependencies.mp4)
 - [Create a Start Script (1:27)](./videos/run-forrest-npm-start.mp4)
@@ -305,7 +308,7 @@ And finally activate the on-save hook in your [VSCode][vscode] settings `.vscode
 
 👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/prettierc/.vscode/settings.json)
 
-### Videos
+### 🍿 Videos
 
 - [Setup Prettier (2:04)](./videos/prettier.mp4)
 
@@ -323,6 +326,15 @@ And verifying that all the cranky settings are correctly passed to your App is t
 ### Add Envalid
 
 [Envalid](https://www.npmjs.com/package/envalid) is a small utility that help you achieve this goal.
+
+### 🍿 Videos
+
+- [Why do you need to validate your environment? (1:33)](./videos/envalid-intro.mp4)
+- [Install Envalid & Scaffold the Environment validation (1:58)](./videos/envalid-install.mp4)
+- [Validate NODE_ENV (3:48)](./videos/envalid-node-env.mp4)
+- [Validate PGSTRING (1:15)](./videos/envalid-pgstring.mp4)
+
+### Add Envalid & Scaffold
 
 ```bash
 npm add envalid
@@ -344,11 +356,30 @@ const env = envalid.cleanEnv(process.env, {
 console.log(env);
 ```
 
-[Here you find the API to `cleanEnv`](https://www.npmjs.com/package/envalid#user-content-api)
+👉 [Here you find the API to `cleanEnv()`.](https://www.npmjs.com/package/envalid#user-content-api)
 
 ### Validate NODE_ENV
 
+```js
+const env = envalid.cleanEnv(process.env, {
+  NODE_ENV: envalid.str({
+    desc: "How is node running?",
+    choices: ["development", "production"],
+    default: "development",
+  }),
+});
+```
+
 ### Validate PGSTRING
+
+```js
+const env = envalid.cleanEnv(process.env, {
+  PGSTRING: envalid.url({
+    desc: "PostgreSQL Connection String",
+    default: "postgres://postgres:postgres@postgres:5432/postgres",
+  }),
+});
+```
 
 ---
 
