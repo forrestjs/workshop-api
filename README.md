@@ -20,7 +20,7 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
   - [Add ForrestJS and Nodemon](#add-forrestjs-and-nodemon)
   - [Add the Start Script](#add-the-start-script)
   - [Run a ForrestJS App](#run-a-forrestjs-app)
-- Setup Prettier
+- [Setup Prettier](#setup-prettier)
 - Validating the NodeJS Environment
 - Add `service-pg` and connect to Postgres
 - Add `service-pg-schema` and scaffold the `pg-schema` _Feature_
