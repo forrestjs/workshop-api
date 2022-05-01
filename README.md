@@ -305,6 +305,10 @@ And finally activate the on-save hook in your [VSCode][vscode] settings `.vscode
 
 👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/prettierc/.vscode/settings.json)
 
+### Videos
+
+- [Setup Prettier (2:04)](./videos/prettier.mp4)
+
 ---
 
 [dk]: https://www.docker.com/get-started
