@@ -10,7 +10,13 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
   - [Project's API](#projects-api)
   - [Connect to Adminer](#connect-to-adminer)
   - [Connect to PSQL](#connect-to-psql)
-- Folder structure, Features, and Services
+- [Folder Structure, Features, and Services](#folder-structure-features-and-services)
+  - [The Project's Root](#the-projects-root)
+  - [The Project's Manifest](#the-projects-manifest)
+  - [The Source Folder](#the-source-folder)
+  - [The App's Manifest](#the-apps-manifest)
+  - [Services & Features](#services--features)
+- Run a ForrestJS App with Nodemon
 - Validating the NodeJS Environment
 - Add `service-pg` and connect to Postgres
 - Add `service-pg-schema` and scaffold the `pg-schema` _Feature_
@@ -121,10 +127,91 @@ quit
 
 ---
 
+## Folder Structure, Features, and Services
+
+A ForrestJS project is based on [NodeJS][nd] and can be easily initialized using the [NPM][npm] command:
+
+```bash
+npm init
+```
+
+Once you go through, you can then structure your project this way:
+
+```
+- root
+  - package.json
+  - src
+    - index.js
+    - features/
+    - services/
+```
+
+### Videos
+
+- [Walk Through a ForrestJS Project Structure (4:43)](./videos/folder-structure.mp4)
+
+### The Project's Root
+
+> The **root folder** is where you store your `package.json` file.
+
+In the root folder of a ForrestJS/NodeJS App you find mostly configuration and documentation files:
+
+- project's manifest
+- testing environment setup
+- editor setup files
+- docker-compose for running infrastructural dependencies
+
+### The Project's Manifest
+
+The file `package.json` should contain all the information that are needed to recreate a correct running state for the project:
+
+- dependencies
+- commands
+
+I suggest you always provide an `npm start` interface for running your project in **development mode**. 
+
+> **Remember:** your developers are the first and most affectionated users of your App!
+
+### The Source Folder
+
+All the JavaScript files go into `/src` for two main reasons:
+
+1. most people do that
+2. you may want to use [TypeScript][ts] so your files need transpiling
+
+Anyway, if you ever face a bug that need fixing, it's likely inside this folder.
+
+### The App's Manifest
+
+The file `src/index.js` is the entry point for your App, and in a ForrestJS App take the fancy name of **App Manifest**.
+
+That's because it holds a few **declararive** responsibilities:
+
+- It describes the App's environment
+- It describes the App's configuration
+- It describes the App's composition  
+  <small>of Services and Features</small>
+
+### Services & Features
+
+The beauty of a ForrestJS App lays in its composability and interoperability of Features and Services.
+
+A **Feature** represents a bit of business value, something that your customer is happy to pay for. 
+
+> The capability of listing and creating Todos is a good Feature.
+
+A **Service** represents a bit of infrastructural value, something that _YOU_ need to work out your Features, but that the customer is not really interested into.
+
+> The capability of connecting to a PostgreSQL database is a good Service.
+
+---
+
 [dk]: https://www.docker.com/get-started
 [dkc]: https://docs.docker.com/compose/
 [pg]: https://www.postgresql.org/
 [psql]: https://www.postgresguide.com/utilities/psql/
 [adm]: https://www.adminer.org/
 [nd]: https://nodejs.org/en/
+[npm]: https://npmjs.com
 [mkf]: https://opensource.com/article/18/8/what-how-makefile
+[ts]: https://www.typescriptlang.org/
