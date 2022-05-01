@@ -4,7 +4,7 @@
   "description": "Step by step video tutorial to using ForrestJS and build a REST and GraphQL API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/forrestjs/workshop-api/issues"
   },
-  "homepage": "https://github.com/forrestjs/workshop-api#readme"
+  "homepage": "https://github.com/forrestjs/workshop-api#readme",
+  "dependencies": {
+    "@forrestjs/core": "^4.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
 }
