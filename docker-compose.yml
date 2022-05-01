@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+ 
+  postgres:
+    image: postgres:14
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  adminer:
+    image: adminer:4.7
+    ports:
+      - "${ADMINER_PORT:-8008}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
