@@ -206,6 +206,66 @@ A **Service** represents a bit of infrastructural value, something that _YOU_ ne
 
 ---
 
+## Run a ForrestJS App with Nodemon
+
+### Videos
+
+- [Install dependencies from NPM (1:13)](./videos/run-forrest-add-dependencies.mp4)
+- [Create a Start Script (1:27)](./videos/run-forrest-npm-start.mp4)
+- [Start your first ForrestJS App (1:46)](./videos/run-forrest-start.mp4)
+
+### Add ForrestJS and Nodemon
+
+Add [ForrestJS Core](https://www.npmjs.com/package/@forrestjs/core) as a project's dependency:
+
+```bash
+npm add @forrestjs/core
+```
+
+Add [Nodemon][nm] as a development dependency:
+
+```bash
+npm add -D nodemon
+```
+
+### Add the Start Script
+
+We can use [Nodemon][nm] to start our App and automatically track changes that we make to the codebase.
+
+Modify `package.json` as follow:
+
+```json
+{
+  "scripts": {
+    "start": "nodemon src/index.js"
+  }
+}
+```
+
+Now you can start your App:
+
+```bash
+npm start
+```
+
+### Run a ForrestJS App
+
+Here is a basic ForrestJS App Manifest scaffold that you can paste into your `src/index.js`:
+
+```js
+// Import Core, Services, and Features
+const forrestjs = require('@forrestjs/core');
+
+// Kick off a ForrestJS App
+const app = forrestjs.run();
+
+// Handle the Boot of the App
+app.then(() => console.log('The app started'));
+app.catch(console.error);
+```
+
+---
+
 [dk]: https://www.docker.com/get-started
 [dkc]: https://docs.docker.com/compose/
 [pg]: https://www.postgresql.org/
@@ -215,3 +275,5 @@ A **Service** represents a bit of infrastructural value, something that _YOU_ ne
 [npm]: https://npmjs.com
 [mkf]: https://opensource.com/article/18/8/what-how-makefile
 [ts]: https://www.typescriptlang.org/
+[nm]: https://nodemon.io/
+[fjs]: https://forrestjs.github.io
