@@ -311,6 +311,47 @@ And finally activate the on-save hook in your [VSCode][vscode] settings `.vscode
 
 ---
 
+## Validating the NodeJS Environment
+
+I could not stress enough how important this step is.
+
+> Everything that can go wrong,  
+> **SHOULD GO WRONG AT BOOT TIME**
+
+And verifying that all the cranky settings are correctly passed to your App is the first step.
+
+### Add Envalid
+
+[Envalid](https://www.npmjs.com/package/envalid) is a small utility that help you achieve this goal.
+
+```bash
+npm add envalid
+```
+
+> There are many alternatives out there, this is just one possibility. It's a simple choice.
+
+The basic scaffold to a validated environment is:
+
+```js
+const envalid = require("envalid");
+
+// Create a filtered and validated environment object
+const env = envalid.cleanEnv(process.env, {
+  // Add validation rules
+});
+
+// Use data you can trust
+console.log(env);
+```
+
+[Here you find the API to `cleanEnv`](https://www.npmjs.com/package/envalid#user-content-api)
+
+### Validate NODE_ENV
+
+### Validate PGSTRING
+
+---
+
 [dk]: https://www.docker.com/get-started
 [dkc]: https://docs.docker.com/compose/
 [pg]: https://www.postgresql.org/
