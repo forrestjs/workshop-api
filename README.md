@@ -16,7 +16,10 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
   - [The Source Folder](#the-source-folder)
   - [The App's Manifest](#the-apps-manifest)
   - [Services & Features](#services--features)
-- Run a ForrestJS App with Nodemon
+- [Run a ForrestJS App with Nodemon](#run-a-forrestjs-app-with-nodemon)
+  - [Add ForrestJS and Nodemon](#add-forrestjs-and-nodemon)
+  - [Add the Start Script](#add-the-start-script)
+  - [Run a ForrestJS App](#run-a-forrestjs-app)
 - Validating the NodeJS Environment
 - Add `service-pg` and connect to Postgres
 - Add `service-pg-schema` and scaffold the `pg-schema` _Feature_
@@ -242,6 +245,8 @@ Modify `package.json` as follow:
 }
 ```
 
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/run-with-nodemon/package.json#L6)
+
 Now you can start your App:
 
 ```bash
@@ -263,6 +268,8 @@ const app = forrestjs.run();
 app.then(() => console.log('The app started'));
 app.catch(console.error);
 ```
+
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/run-with-nodemon/src/index.js)
 
 ---
 
