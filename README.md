@@ -25,7 +25,9 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
   - [Add Envalid & Scaffold](#add-envalid--scaffold)
   - [Validate NODE_ENV](#validate-nodeenv)
   - [Validate PGSTRING](#validate-pgstring)
-- Add `service-pg` and connect to Postgres
+- [Add `service-pg` and connect to Postgres](#add-service-pg-and-connect-to-postgres)
+  - [Install `service-pg`](#install-service-pg)
+  - [Add `service-pg` to Your App](#add-service-pg-to-your-app)
 - Add `service-pg-schema` and scaffold the `pg-schema` _Feature_
 - Use `pg-schema` to build the TodoApp tables
 - Use `pg-schema` to seed data
@@ -397,7 +399,7 @@ const env = envalid.cleanEnv(process.env, {
 - [Apply settings to service-pg (1:26)](./videos/service-pg-settings.mp4)
 - [Run the first SQL query (0:48)](./videos/service-pg-query.mp4)
 
-### Install the Service
+### Install `service-pg`
 
 You can find all the official ForrestJS Services in this page:  
 https://github.com/forrestjs/forrestjs/tree/master/packages
@@ -408,7 +410,7 @@ The [`service-pg`](https://github.com/forrestjs/forrestjs/tree/master/packages/s
 npm add @forrestjs/service-pg
 ```
 
-### Add the Service to Your App
+### Add `service-pg` to Your App
 
 As with any other NPM module, you need to import it:
 
