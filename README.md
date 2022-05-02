@@ -388,6 +388,55 @@ const env = envalid.cleanEnv(process.env, {
 
 ---
 
+## Add `service-pg` and Connect to Postgres
+
+### 🍿 Videos
+
+- [Where to find ForrestJS services (0:38)](./videos/where-to-find-services.mp4)
+- [Install service-pg (0:41)](./videos/service-pg-install.mp4)
+- [Apply settings to service-pg (1:26)](./videos/service-pg-settings.mp4)
+- [Run the first SQL query (0:48)](./videos/service-pg-query.mp4)
+
+### Install the Service
+
+You can find all the official ForrestJS Services in this page:  
+https://github.com/forrestjs/forrestjs/tree/master/packages
+
+The [`service-pg`](https://github.com/forrestjs/forrestjs/tree/master/packages/service-pg) is a minimalistic wrapper arount the [`pg`](https://www.npmjs.com/package/pg) library. The official PostgreSQL client for NodeJS.
+
+```bash
+npm add @forrestjs/service-pg
+```
+
+### Add the Service to Your App
+
+As with any other NPM module, you need to import it:
+
+```js
+const servicePg = require("@forrestjs/service-pg");
+```
+
+Then you need to configure your ForrestJS App so that it correctly uses it:
+
+```js
+forrestjs.run({
+  services: [servicePg],
+  settings: {
+    pg: {
+      connectionString: env.PGSTRING,
+    },
+  },
+});
+```
+
+The `services` key let you list all the Services that you need to run in your App.
+
+> The order doesn't really matter.
+
+The `settings` key let you setup Services and Features.
+
+> In a good App, you would mostly pass on validated environmental variables.
+
 [dk]: https://www.docker.com/get-started
 [dkc]: https://docs.docker.com/compose/
 [pg]: https://www.postgresql.org/
