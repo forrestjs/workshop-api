@@ -35,11 +35,11 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
   - [Build Your Schema](#build-your-schema)
   - [Seed Your Schema](#seed-your-schema)
   - [Reset Your Schema](#reset-your-schema)
-- Add `service-fastify`
-- Add `service-fastify-healthcheck`
-- Add an _HTML_ welcome page with `service-fastify-static`
-- Check for a Postgres connection in the App's Healthcheck
-- Scaffold the `todos-rest` Feature
+- [Service Fastify](#service-fastify)
+  - [Install Service Fastify](#install-service-fastify)
+  - [Install Service Fastify Healthz](#install-service-fastify-healthz)
+  - [Create an HTML Home Page](#create-an-html-home-page)
+  - [Create a Static JSON API](#create-a-static-json-api)
 - List existing todos
 - Add an _AJV_ schema to the listing route
 - Add a new todo
@@ -47,6 +47,7 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
 - Scaffold the `todos-gql` Feature
 - List existing todos query
 - Add new todo mutation
+- Check for a Postgres connection in the App's Healthcheck
 
 ---
 
@@ -608,6 +609,149 @@ module.exports = async ({ query }) => {
 ```
 
 👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/service-pg-schema/src/features/schema/reset.js)
+
+---
+
+## Service Fastify
+
+### 🍿 Videos
+
+- [Install Service Fastify (1:08)](./videos/service-fastify.mp4)
+- [Install Service Fastify Healthz (1:11)](./videos/service-fastify-healthz.mp4)
+- [Add HTML Web Pages (1:38)](./videos/service-fastify-static.mp4)
+- [Create a Static JSON API (2:08)](./videos/service-fastify-todos-scaffold.mp4)
+
+### Install Service Fastify
+
+Add the [`service-fastify`](https://github.com/forrestjs/forrestjs/tree/master/packages/service-fastify) dependency:
+
+```bash
+npm add @forrestjs/service-fastify
+```
+
+Add the Service to your App:
+
+```js
+const fastifyService = require("@forrestjs/service-fastify");
+
+forrestjs.run({
+  services: [fastifyService],
+});
+```
+
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/service-fastify/src/index.js#L5)
+
+### Install Service Fastify Healthz
+
+Most Web Serices offer a status route that can provide the overall status of the service.
+
+[_Fastify Healthz Service_](https://github.com/forrestjs/forrestjs/tree/master/packages/service-fastify-healthz) offers a simple and extensible support for this purpose.
+
+Add the `service-fastify-healthz` dependency:
+
+```bash
+npm add @forrestjs/service-fastify-healthz
+```
+
+Add the Service to your App:
+
+```js
+const healthzService = require("@forrestjs/service-fastify-healthz");
+
+forrestjs.run({
+  services: [fastifyService, healthzService],
+});
+```
+
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/service-fastify/src/index.js#L6)
+
+### Create an HTML Home Page
+
+Web Services often need to serve some form of static HTML pages and assets.
+
+[_Fastify Static Service_](https://github.com/forrestjs/forrestjs/tree/master/packages/service-fastify-static) offers a minimalisti wrapper around the [Fastify Static](https://github.com/fastify/fastify-static) plugin.
+
+```bash
+npm add @forrestjs/service-fastify-static
+```
+
+Add the Service to your App:
+
+```js
+const fastifyStaticService = require("@forrestjs/service-fastify-static");
+
+forrestjs.run({
+  services: [fastifyService, fastifyStaticService],
+});
+```
+
+And provide the configuration to your static source folder:
+
+```js
+const path = require("path");
+
+forrestjs.run({
+  settings: {
+    fastify: {
+      static: {
+        root: path.join(__dirname, "html"),
+      },
+    },
+  },
+});
+```
+
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/service-fastify/src/index.js#L7)
+
+### Create a Static JSON API
+
+Let's prepare the scaffold of our Todos feature:
+
+```bash
+mkdir src/features/todos && \
+touch src/features/todos/index.js && \
+mkdir src/features/todos/handlers && \
+touch src/features/todos/handlers/list.js && \
+touch src/features/todos/handlers/create.js && \
+touch src/features/todos/handlers/update.js && \
+touch src/features/todos/handlers/delete.js
+```
+
+Then let's scaffold the Feature's Manifest as so to add the `/todos` route and list existing entries:
+
+```js
+const listTodos = require("./handlers/list");
+
+const todosFeature = () => [
+  {
+    target: "$FASTIFY_ROUTE",
+    handler: {
+      method: "GET",
+      url: "/todos",
+      handler: listTodos,
+    },
+  },
+];
+```
+
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/service-fastify/src/features/todos/index.js)
+
+Finally, we can implement the Fastify Route Handler:
+
+```js
+module.exports = (request, reply) => {
+  reply.send({
+    items: [
+      { id: 1, title: "Buy milk" },
+      { id: 2, title: "Learn ForrestJS" },
+    ],
+  });
+};
+```
+
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/service-fastify/src/features/todos/handlers/list.js)
+
+> Don't forget to add your Feature into the App's Manifest!
 
 ---
 

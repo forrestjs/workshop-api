@@ -2,9 +2,15 @@
 const forrestjs = require("@forrestjs/core");
 const servicePg = require("@forrestjs/service-pg");
 const servicePgSchema = require("@forrestjs/service-pg-schema");
+const fastifyService = require("@forrestjs/service-fastify");
+const fastifyHealthzService = require("@forrestjs/service-fastify-healthz");
+const serviceFastifyStatic = require("@forrestjs/service-fastify-static");
 const envalid = require("envalid");
+const path = require("path");
 
+// Import Application Features
 const schemaFeature = require("./features/schema");
+const todosFeature = require("./features/todos");
 
 // Validate the Environment
 const env = envalid.cleanEnv(process.env, {
@@ -21,11 +27,22 @@ const env = envalid.cleanEnv(process.env, {
 
 // Kick off a ForrestJS App
 const app = forrestjs.run({
-  services: [servicePg, servicePgSchema],
-  features: [schemaFeature],
+  services: [
+    servicePg,
+    servicePgSchema,
+    fastifyService,
+    fastifyHealthzService,
+    serviceFastifyStatic,
+  ],
+  features: [schemaFeature, todosFeature],
   settings: {
     pg: {
       connectionString: env.PGSTRING,
+    },
+    fastify: {
+      static: {
+        root: path.join(__dirname, "html"),
+      },
     },
   },
 });

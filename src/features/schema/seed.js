@@ -3,10 +3,10 @@ module.exports = async ({ query }) => {
     BEGIN;
 
     INSERT INTO "public"."todos"
-      ("title")
+      ("id", "title")
     VALUES
-      ('buy milk'),
-      ('clean windows')
+      (1, 'buy milk'),
+      (2, 'clean windows')
     ON CONFLICT ON CONSTRAINT "todos_pkey"
     DO UPDATE SET
       "status" = false;
