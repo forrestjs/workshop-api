@@ -617,6 +617,7 @@ module.exports = async ({ query }) => {
 
 - [Install Service Fastify (1:08)](./videos/service-fastify.mp4)
 - [Install Service Fastify Healthz (1:11)](./videos/service-fastify-healthz.mp4)
+- [Add HTML Web Pages (1:38)](./videos/service-fastify-static.mp4)
 
 ### Install Service Fastify
 
@@ -660,9 +661,43 @@ forrestjs.run({
 });
 ```
 
-👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/service-fastify/src/index.js#L5)
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/service-fastify/src/index.js#L6)
 
 ### Create an HTML Home Page
+
+Web Services often need to serve some form of static HTML pages and assets.
+
+[_Fastify Static Service_](https://github.com/forrestjs/forrestjs/tree/master/packages/service-fastify-static) offers a minimalisti wrapper around the [Fastify Static](https://github.com/fastify/fastify-static) plugin.
+
+```bash
+npm add @forrestjs/service-fastify-static
+```
+
+Add the Service to your App:
+
+```js
+const fastifyStaticService = require("@forrestjs/service-fastify-static");
+
+forrestjs.run({
+  services: [fastifyService, fastifyStaticService],
+});
+```
+
+And provide the configuration to your static source folder:
+
+```js
+const path = require("path");
+
+forrestjs.run({
+  settings: {
+    fastify: {
+      static: {
+        root: path.join(__dirname, "html"),
+      },
+    },
+  },
+});
+```
 
 ### Create a Static JSON API
 
