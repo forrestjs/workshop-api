@@ -1,5 +1,6 @@
 const buildSchema = require("./build");
 const seedSchema = require("./seed");
+const resetSchema = require("./reset");
 
 const schemaFeature = () => [
   {
@@ -9,6 +10,10 @@ const schemaFeature = () => [
   {
     target: "$PG_SCHEMA_SEED",
     handler: seedSchema,
+  },
+  {
+    target: "$PG_SCHEMA_RESET",
+    handler: resetSchema,
   },
 ];
 
