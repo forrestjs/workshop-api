@@ -753,6 +753,43 @@ module.exports = (request, reply) => {
 
 > Don't forget to add your Feature into the App's Manifest!
 
+## List Todos
+
+### 🍿 Videos
+
+- [List existing todos (1:08)](./videos/service-fastify.mp4)
+
+### List Existing Todos
+
+`service-pg` and `service-fastify` complete each others, and `service-pg` decorates Fastify's `request` object with a reference to the running connection pool:
+
+```js
+const res = await request.pg.query(TODOS_QUERY);
+```
+
+### Limit the Response Size
+
+The library [pg][pg] offert the possibility to write [parametric queries](https://node-postgres.com/features/queries#parameterized-query):
+
+```js
+const TODOS_QUERY = `
+  SELECT * FROM "public"."todos"
+  LIMIT $1
+`;
+
+await request.pg.query(TODOS_QUERY, [5]);
+```
+
+And _ForrestJS Fastify Service_ provides a simple API to access your [App's configuration](https://forrestjs.github.io/api/app-config/):
+
+```js
+const pageSize = request.getConfig("todos.page.size");
+```
+
+This way, you can move all the **magic numbers** away from the implementation, and centralize them at configuration level, or even better, at environment validation level.
+
+### The Query Object & Pagination
+
 ---
 
 [dk]: https://www.docker.com/get-started
