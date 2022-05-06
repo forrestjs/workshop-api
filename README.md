@@ -28,9 +28,13 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
 - [Add `service-pg` and connect to Postgres](#add-service-pg-and-connect-to-postgres)
   - [Install `service-pg`](#install-service-pg)
   - [Add `service-pg` to Your App](#add-service-pg-to-your-app)
-- Add `service-pg-schema` and scaffold the `pg-schema` _Feature_
-- Use `pg-schema` to build the TodoApp tables
-- Use `pg-schema` to seed data
+- [Build and Maintain a DB Schema](#build-and-maintain-a-db-schema)
+  - [Migrations VS Idempotency](#migrations-vs-idempotency)
+  - [Add `service-pg-schema` Service](#add-service-pg-schema-service)
+  - [Scaffold the Schema Feature](#scaffold-the-schema-feature)
+  - [Build Your Schema](#build-your-schema)
+  - [Seed Your Schema](#seed-your-schema)
+  - [Reset Your Schema](#reset-your-schema)
 - Add `service-fastify`
 - Add `service-fastify-healthcheck`
 - Add an _HTML_ welcome page with `service-fastify-static`
