@@ -701,6 +701,8 @@ forrestjs.run({
 });
 ```
 
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/service-fastify/src/index.js#L7)
+
 ### Create a Static JSON API
 
 Let's prepare the scaffold of our Todos feature:
@@ -732,6 +734,8 @@ const todosFeature = () => [
 ];
 ```
 
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/service-fastify/src/features/todos/index.js)
+
 Finally, we can implement the Fastify Route Handler:
 
 ```js
@@ -744,6 +748,10 @@ module.exports = (request, reply) => {
   });
 };
 ```
+
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/service-fastify/src/features/todos/handlers/list.js)
+
+> Don't forget to add your Feature into the App's Manifest!
 
 ---
 
