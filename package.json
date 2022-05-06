@@ -19,6 +19,7 @@
   "dependencies": {
     "@forrestjs/core": "^4.4.1",
     "@forrestjs/service-pg": "^4.4.1",
+    "@forrestjs/service-pg-schema": "^4.4.1",
     "envalid": "^7.3.1"
   },
   "devDependencies": {

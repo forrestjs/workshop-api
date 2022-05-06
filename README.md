@@ -439,6 +439,146 @@ The `settings` key let you setup Services and Features.
 
 > In a good App, you would mostly pass on validated environmental variables.
 
+---
+
+## Build and Maintain a DB Schema
+
+### 🍿 Videos
+
+- [Introduction to Service `pg-schema` (1:28)](./videos/service-pg-schema-intro.mp4)
+- [Introduction to Service `pg-schema` (1:28)](./videos/service-pg-schema-intro.mp4)
+
+### Migrations VS Idempotency
+
+For complex Apps it is good to decouple the schema from the App itself, and apply **dedicated schema migration projects**.
+
+If it's just a single database I would use [KnexJS' migrations](http://knexjs.org/#Migrations).
+
+For managing multiple databases I now use [Hasura CLI's Migrations](https://hasura.io/docs/latest/graphql/core/migrations/migrations-setup/).
+
+👉 When it comes to **micro-services** that employ highly specialized db schemas, I rather go with a much simpler approach.
+
+> The service is responsible to declare and update its own schema at boot time.
+
+This procedure must be:
+
+- idempotent
+- resilient to horizontal scaling
+
+With PostgreSQL this is easy to achive thanks to transactions and statementes such as `IF (NOT) EXISTS`.
+
+ForrestJS' [`service-pg-schema`](https://github.com/forrestjs/forrestjs/tree/master/packages/service-pg-schema) Service offers a simple interface to achieve this goal.
+
+### Add `service-pg-schema` Service
+
+Install the Service:
+
+```bash
+npm add @forrestjs/service-pg-schema
+```
+
+> This Service requres [`service-pg`](https://github.com/forrestjs/forrestjs/tree/master/packages/service-pg) to be installed and properly configured.
+
+```js
+const servicePg = require("@forrestjs/service-pg");
+const servicePgSchema = require("@forrestjs/service-pg-schema");
+
+forrestjs.run({
+  services: [servicePg, servicePgSchema],
+});
+```
+
+### Scaffold the Schema Feature
+
+A ForrestJS Feature live in a dedicated folder under the `/src/features` area:
+
+```bash
+mkdir src/features/schema
+```
+
+And needs a Feature's Manifest file which is a simple NodeJS module:
+
+```bash
+touch src/features/schema/index.js
+```
+
+At its core, a _Feature_ is a JavaScript function that register _Actions_ to _Extension Points_:
+
+```js
+const schemaFeature = () => [
+  {
+    target: "$PG_SCHEMA_BUILD",
+    handler: () => {
+      console.log("will do something...");
+    },
+  },
+];
+```
+
+Once you create a _Feature_, remember to add it to the App's Manifest in `src/index.js`:
+
+```js
+forrestjs.run({
+  services: [servicePg, servicePgSchema],
+  features: [schemaFeature],
+});
+```
+
+### Build Your Schema
+
+For this tutorial we will keep things radically simple and just use a single table:
+
+```sql
+CREATE TABLE IF NOT EXISTS "public"."todos" (
+  "id" SERIAL PRIMARY KEY,
+  "title" VARCHAR(80) NOT NULL,
+  "status" BOOLEAN DEFAULT false
+);
+```
+
+We can easily manage small db schemas with thread safe and idempotent transactions:
+
+```js
+await query(`
+  BEGIN;
+
+  CREATE TABLE IF NOT EXISTS "public"."todos" (
+    "id" SERIAL PRIMARY KEY,
+    "title" VARCHAR(80) NOT NULL,
+    "status" BOOLEAN DEFAULT false
+  );
+
+  -- Create another table...
+  -- Alter table, add a column...
+
+  COMMIT;
+`);
+```
+
+The whole point is that you never change the code you wrote. You only add new information to the schema.
+
+> NOTE: this approach works fine for very small and well defined schemas, where evolution of the schema is an exception to its stability.
+
+### Seed Your Schema
+
+```js
+module.exports = async ({ query }) => {};
+```
+
+```js
+await query(`
+  INSERT INTO "public"."todos"
+  ("title")
+  VALUES
+  ('buy milk'),
+  ('clean windows')
+`);
+```
+
+### Reset Your Schema
+
+---
+
 [dk]: https://www.docker.com/get-started
 [dkc]: https://docs.docker.com/compose/
 [pg]: https://www.postgresql.org/

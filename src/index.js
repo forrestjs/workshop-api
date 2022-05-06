@@ -1,7 +1,10 @@
 // Import Core, Services, and Features
 const forrestjs = require("@forrestjs/core");
 const servicePg = require("@forrestjs/service-pg");
+const servicePgSchema = require("@forrestjs/service-pg-schema");
 const envalid = require("envalid");
+
+const schemaFeature = require("./features/schema");
 
 // Validate the Environment
 const env = envalid.cleanEnv(process.env, {
@@ -16,18 +19,10 @@ const env = envalid.cleanEnv(process.env, {
   }),
 });
 
-const myFeature = {
-  target: "$PG_READY",
-  handler: async ({ query }) => {
-    const res = await query("SELECT NOW()");
-    console.log(res.rows);
-  },
-};
-
 // Kick off a ForrestJS App
 const app = forrestjs.run({
-  services: [servicePg],
-  features: [myFeature],
+  services: [servicePg, servicePgSchema],
+  features: [schemaFeature],
   settings: {
     pg: {
       connectionString: env.PGSTRING,
