@@ -1,6 +1,4 @@
 module.exports = async ({ query }) => {
-  console.log("will do something...");
-
   await query(`
     BEGIN;
 

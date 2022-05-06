@@ -560,7 +560,7 @@ await query(`
 `);
 ```
 
-👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/validating-node-environment/src/index.js#L7)
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/service-pg-schema/src/features/schema/build.js)
 
 The whole point is that you never change the code you wrote. You only add new information to the schema.
 
@@ -587,7 +587,7 @@ module.exports = async ({ query }) => {
 };
 ```
 
-👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/validating-node-environment/src/index.js#L7)
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/service-pg-schema/src/features/schema/seed.js)
 
 ### Reset Your Schema
 
@@ -603,7 +603,7 @@ module.exports = async ({ query }) => {
 };
 ```
 
-👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/validating-node-environment/src/index.js#L7)
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/service-pg-schema/src/features/schema/reset.js)
 
 ---
 
