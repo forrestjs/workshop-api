@@ -451,6 +451,7 @@ The `settings` key let you setup Services and Features.
 - [Refactor the Feature's Manifest (0:57)](./videos/service-pg-schema-refactor.mp4)
 - [Build an Idempotent Schema Definition (1:36)](./videos/service-pg-schema-build.mp4)
 - [Idempotent Data Seeding (2:48)](./videos/service-pg-schema-seed.mp4)
+- [Reset Your Schema (2:48)](./videos/service-pg-schema-reset.mp4)
 
 ### Migrations VS Idempotency
 
@@ -559,6 +560,8 @@ await query(`
 `);
 ```
 
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/validating-node-environment/src/index.js#L7)
+
 The whole point is that you never change the code you wrote. You only add new information to the schema.
 
 > NOTE: this approach works fine for very small and well defined schemas, where evolution of the schema is an exception to its stability.
@@ -566,20 +569,41 @@ The whole point is that you never change the code you wrote. You only add new in
 ### Seed Your Schema
 
 ```js
-module.exports = async ({ query }) => {};
+module.exports = async ({ query }) => {
+  await query(`
+    BEGIN;
+
+    INSERT INTO "public"."todos"
+      ("title")
+    VALUES
+      ('buy milk'),
+      ('clean windows')
+    ON CONFLICT ON CONSTRAINT "todos_pkey"
+    DO UPDATE SET
+      "status" = false;
+
+    COMMIT;
+  `);
+};
 ```
 
-```js
-await query(`
-  INSERT INTO "public"."todos"
-  ("title")
-  VALUES
-  ('buy milk'),
-  ('clean windows')
-`);
-```
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/validating-node-environment/src/index.js#L7)
 
 ### Reset Your Schema
+
+```js
+module.exports = async ({ query }) => {
+  await query(`
+    BEGIN;
+
+    DROP TABLE IF EXISTS "public"."todos" CASCADE;
+
+    COMMIT;
+  `);
+};
+```
+
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/validating-node-environment/src/index.js#L7)
 
 ---
 
