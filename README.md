@@ -616,10 +616,11 @@ module.exports = async ({ query }) => {
 ### 🍿 Videos
 
 - [Install Service Fastify (1:08)](./videos/service-fastify.mp4)
+- [Install Service Fastify Healthz (1:11)](./videos/service-fastify-healthz.mp4)
 
 ### Install Service Fastify
 
-Add the `service-fastify` dependency:
+Add the [`service-fastify`](https://github.com/forrestjs/forrestjs/tree/master/packages/service-fastify) dependency:
 
 ```bash
 npm add @forrestjs/service-fastify
@@ -635,7 +636,31 @@ forrestjs.run({
 });
 ```
 
-### Install Service Fastify Healthcheck
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/service-fastify/src/index.js#L5)
+
+### Install Service Fastify Healthz
+
+Most Web Serices offer a status route that can provide the overall status of the service.
+
+[_Fastify Healthz Service_](https://github.com/forrestjs/forrestjs/tree/master/packages/service-fastify-healthz) offers a simple and extensible support for this purpose.
+
+Add the `service-fastify-healthz` dependency:
+
+```bash
+npm add @forrestjs/service-fastify-healthz
+```
+
+Add the Service to your App:
+
+```js
+const healthzService = require("@forrestjs/service-fastify-healthz");
+
+forrestjs.run({
+  services: [fastifyService, healthzService],
+});
+```
+
+👉 [Checkout the source code](https://github.com/forrestjs/workshop-api/blob/service-fastify/src/index.js#L5)
 
 ### Create an HTML Home Page
 
