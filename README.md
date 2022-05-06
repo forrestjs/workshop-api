@@ -611,6 +611,38 @@ module.exports = async ({ query }) => {
 
 ---
 
+## Add Service Fastify
+
+### 🍿 Videos
+
+- [Install Service Fastify (1:08)](./videos/service-fastify.mp4)
+
+### Install Service Fastify
+
+Add the `service-fastify` dependency:
+
+```bash
+npm add @forrestjs/service-fastify
+```
+
+Add the Service to your App:
+
+```js
+const fastifyService = require("@forrestjs/service-fastify");
+
+forrestjs.run({
+  services: [fastifyService],
+});
+```
+
+### Install Service Fastify Healthcheck
+
+### Create an HTML Home Page
+
+### Create a Static JSON API
+
+---
+
 [dk]: https://www.docker.com/get-started
 [dkc]: https://docs.docker.com/compose/
 [pg]: https://www.postgresql.org/

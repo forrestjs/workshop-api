@@ -2,6 +2,7 @@
 const forrestjs = require("@forrestjs/core");
 const servicePg = require("@forrestjs/service-pg");
 const servicePgSchema = require("@forrestjs/service-pg-schema");
+const fastifyService = require("@forrestjs/service-fastify");
 const envalid = require("envalid");
 
 const schemaFeature = require("./features/schema");
@@ -21,7 +22,7 @@ const env = envalid.cleanEnv(process.env, {
 
 // Kick off a ForrestJS App
 const app = forrestjs.run({
-  services: [servicePg, servicePgSchema],
+  services: [servicePg, servicePgSchema, fastifyService],
   features: [schemaFeature],
   settings: {
     pg: {
