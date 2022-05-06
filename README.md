@@ -450,6 +450,7 @@ The `settings` key let you setup Services and Features.
 - [Scaffold the Schema Feature (2:03)](./videos/service-pg-schema-scaffold.mp4)
 - [Refactor the Feature's Manifest (0:57)](./videos/service-pg-schema-refactor.mp4)
 - [Build an Idempotent Schema Definition (1:36)](./videos/service-pg-schema-build.mp4)
+- [Idempotent Data Seeding (2:48)](./videos/service-pg-schema-seed.mp4)
 
 ### Migrations VS Idempotency
 
