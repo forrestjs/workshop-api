@@ -8,7 +8,9 @@ const serviceFastifyStatic = require("@forrestjs/service-fastify-static");
 const envalid = require("envalid");
 const path = require("path");
 
+// Import Application Features
 const schemaFeature = require("./features/schema");
+const todosFeature = require("./features/todos");
 
 // Validate the Environment
 const env = envalid.cleanEnv(process.env, {
@@ -32,7 +34,7 @@ const app = forrestjs.run({
     fastifyHealthzService,
     serviceFastifyStatic,
   ],
-  features: [schemaFeature],
+  features: [schemaFeature, todosFeature],
   settings: {
     pg: {
       connectionString: env.PGSTRING,

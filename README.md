@@ -35,11 +35,11 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
   - [Build Your Schema](#build-your-schema)
   - [Seed Your Schema](#seed-your-schema)
   - [Reset Your Schema](#reset-your-schema)
-- Add `service-fastify`
-- Add `service-fastify-healthcheck`
-- Add an _HTML_ welcome page with `service-fastify-static`
-- Check for a Postgres connection in the App's Healthcheck
-- Scaffold the `todos-rest` Feature
+- [Service Fastify](#service-fastify)
+  - [Install Service Fastify](#install-service-fastify)
+  - [Install Service Fastify Healthz](#install-service-fastify-healthz)
+  - [Create an HTML Home Page](#create-an-html-home-page)
+  - [Create a Static JSON API](#create-a-static-json-api)
 - List existing todos
 - Add an _AJV_ schema to the listing route
 - Add a new todo
@@ -47,6 +47,7 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
 - Scaffold the `todos-gql` Feature
 - List existing todos query
 - Add new todo mutation
+- Check for a Postgres connection in the App's Healthcheck
 
 ---
 
@@ -611,13 +612,14 @@ module.exports = async ({ query }) => {
 
 ---
 
-## Add Service Fastify
+## Service Fastify
 
 ### 🍿 Videos
 
 - [Install Service Fastify (1:08)](./videos/service-fastify.mp4)
 - [Install Service Fastify Healthz (1:11)](./videos/service-fastify-healthz.mp4)
 - [Add HTML Web Pages (1:38)](./videos/service-fastify-static.mp4)
+- [Create a Static JSON API (2:08)](./videos/service-fastify-todos-scaffold.mp4)
 
 ### Install Service Fastify
 
@@ -700,6 +702,48 @@ forrestjs.run({
 ```
 
 ### Create a Static JSON API
+
+Let's prepare the scaffold of our Todos feature:
+
+```bash
+mkdir src/features/todos && \
+touch src/features/todos/index.js && \
+mkdir src/features/todos/handlers && \
+touch src/features/todos/handlers/list.js && \
+touch src/features/todos/handlers/create.js && \
+touch src/features/todos/handlers/update.js && \
+touch src/features/todos/handlers/delete.js
+```
+
+Then let's scaffold the Feature's Manifest as so to add the `/todos` route and list existing entries:
+
+```js
+const listTodos = require("./handlers/list");
+
+const todosFeature = () => [
+  {
+    target: "$FASTIFY_ROUTE",
+    handler: {
+      method: "GET",
+      url: "/todos",
+      handler: listTodos,
+    },
+  },
+];
+```
+
+Finally, we can implement the Fastify Route Handler:
+
+```js
+module.exports = (request, reply) => {
+  reply.send({
+    items: [
+      { id: 1, title: "Buy milk" },
+      { id: 2, title: "Learn ForrestJS" },
+    ],
+  });
+};
+```
 
 ---
 
