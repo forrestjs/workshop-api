@@ -446,7 +446,7 @@ The `settings` key let you setup Services and Features.
 ### 🍿 Videos
 
 - [Introduction to Service `pg-schema` (1:28)](./videos/service-pg-schema-intro.mp4)
-- [Introduction to Service `pg-schema` (1:28)](./videos/service-pg-schema-intro.mp4)
+- [Install Service `pg-schema` (0:56)](./videos/service-pg-schema-install.mp4)
 
 ### Migrations VS Idempotency
 
