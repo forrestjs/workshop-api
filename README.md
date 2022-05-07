@@ -933,6 +933,7 @@ This way, you gain declarative control over WHAT is sent out by your handlers, *
 - [Consume The Request's Body (1:10)](./videos/add-todo-body.mp4)
 - [Validate The Request's Body (1:45)](./videos/add-todo-body-schema.mp4)
 - [Failing The Insert Query (1:22)](./videos/add-todo-insert-fails.mp4)
+- [Fix The Seed Script (1:12)](./videos/add-todo-insert-fixed.mp4)
 
 ### Consume The Request's Body
 
