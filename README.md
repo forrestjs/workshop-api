@@ -958,13 +958,90 @@ module.exports = (request, reply) => {
 
 ### Validate The Request's Body
 
+Let's define a route's schema that validates the content of the `body` object:
+
+```js
+module.exports = {
+  body: {
+    type: "object",
+    additionalProperties: false,
+    required: ["title"],
+    properties: {
+      title: {
+        type: "string",
+        minLength: 4,
+      },
+    },
+  },
+};
+```
+
 ### Failing The Insert Query
+
+The insert query that takes the `title` from the `request.body` is fairly simple:
+
+```sql
+INSERT INTO "public"."todos"
+  ( "title" )
+VALUES
+  ( $1 )
+```
+
+But it fails in case the sequence `todos_id_seq` (created by the `"id" SERIAL` statement in our schema build script) falls out of sync.
 
 ### Fix The Seed Script
 
+It is a good idea to reset all the relevant sequences after a seeding activity:
+
+```sql
+LOCK TABLE "public"."todos" IN EXCLUSIVE MODE;
+SELECT setval('todos_id_seq', COALESCE((SELECT MAX(id)+1 FROM "public"."todos"), 1), false);
+```
+
+You can test this query by retrieving the next value from the serie:
+
+```sql
+SELECT "last_value" + 1 AS "nextval" FROM "todos_id_seq";
+```
+
 ### Insert Query With Returning Values
 
+```sql
+INSERT INTO "public"."todos"
+  ( "title" )
+VALUES
+  ( $1 )
+RETURNING *
+```
+
 ### Serialize The New Todo
+
+We can make the output of the Create Todo endpoint match the one we applied to the list:
+
+```js
+reply.send({ items: res.rows });
+```
+
+And we can add the `response.200` key into the `create.schema.js`:
+
+```js
+module.exports = {
+  body: {
+    type: "object",
+    ...
+  },
+
+  // Declare and Filter the JSON Output
+  response: {
+    200: {
+      type: "object",
+      ...
+    },
+  },
+};
+```
+
+### Declare Schema Fragments
 
 ---
 

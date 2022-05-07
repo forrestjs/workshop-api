@@ -2,6 +2,7 @@ const listTodos = require("./handlers/list");
 const listTodosSchema = require("./handlers/list.schema");
 
 const createTodo = require("./handlers/create");
+const createTodoSchema = require("./handlers/create.schema");
 
 const todosFeature = () => [
   {
@@ -18,6 +19,7 @@ const todosFeature = () => [
     handler: {
       method: "POST",
       url: "/todos",
+      schema: createTodoSchema,
       handler: createTodo,
     },
   },
