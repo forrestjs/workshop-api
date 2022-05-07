@@ -934,6 +934,9 @@ This way, you gain declarative control over WHAT is sent out by your handlers, *
 - [Validate The Request's Body (1:45)](./videos/add-todo-body-schema.mp4)
 - [Failing The Insert Query (1:22)](./videos/add-todo-insert-fails.mp4)
 - [Fix The Seed Script (1:12)](./videos/add-todo-insert-fixed.mp4)
+- [Insert Query With Returning Values (1:16)](./videos/add-todos-output.mp4)
+- [Serialize The New Todo (2:20)](./videos/add-todo-fastify-schema-fragments.mp4)
+- [Declare Schema Fragments (1:36)](./videos/add-todo-schema-fragment-refactoring.mp4)
 
 ### Consume The Request's Body
 
