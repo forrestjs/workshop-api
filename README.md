@@ -767,6 +767,7 @@ module.exports = (request, reply) => {
 - [QueryString & Pagination (1:11)](./videos/todos-pagination.mp4)
 - [Filter By Todos Status (1:48)](./videos/todos-filter.mp4)
 - [Search By Todos Title (1:25)](./videos/todos-search.mp4)
+- [Schema and I/O Validation (2:10)](./videos/todos-schema.mp4)
 
 ### List All Todos
 
