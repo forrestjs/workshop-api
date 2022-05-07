@@ -3,22 +3,22 @@ module.exports = async ({ query }) => {
     BEGIN;
 
     INSERT INTO "public"."todos"
-      ("id", "title")
+      ("id", "title", "status")
     VALUES
-      (1, 'Buy milk'),
-      (2, 'Learn ForrestJS'),
-      (3, 'Learn PostgreSQL'),
-      (4, 'Change tiers to the car'),
-      (5, 'Feed the cat'),
-      (6, 'Water the plants'),
-      (7, 'Get the kid from school'),
-      (8, 'Change socks'),
-      (9, 'Play guitar'),
-      (10, 'Meditate')
+      (1, 'Buy milk', false),
+      (2, 'Learn ForrestJS', true),
+      (3, 'Learn PostgreSQL', false),
+      (4, 'Change tiers to the car', true),
+      (5, 'Feed the cat', false),
+      (6, 'Water the plants', true),
+      (7, 'Get the kid from school', false),
+      (8, 'Change socks', true),
+      (9, 'Play guitar', false),
+      (10, 'Meditate', true)
     ON CONFLICT ON CONSTRAINT "todos_pkey"
     DO UPDATE SET
       "title" = EXCLUDED."title",
-      "status" = false;
+      "status" = EXCLUDED."status";
 
     COMMIT;
   `);
