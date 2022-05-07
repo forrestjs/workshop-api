@@ -47,8 +47,14 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
   - [Filter By Todos Status](#filter-by-todos-status)
   - [Search By Todos Title](#search-by-todos-title)
   - [Schema and I/O Validation](#schema-and-io-validation)
-- Add a new todo
-- Add an _AJV_ schema to the new todo route
+- [Create Todos](#create-todos)
+  - [Consume The Request's Body](#consume-the-requests-body)
+  - [Validate The Request's Body](#validate-the-requests-body)
+  - [Failing The Insert Query](#failing-the-insert-query)
+  - [Fix The Seed Script](#fix-the-seed-script)
+  - [Insert Query With Returning Values](#insert-query-with-returning-values)
+  - [Serialize The New Todo](#serialize-the-new-todo)
+  - [Declare Schema Fragments](#declare-schema-fragments)
 - Scaffold the `todos-gql` Feature
 - List existing todos query
 - Add new todo mutation
