@@ -40,8 +40,13 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
   - [Install Service Fastify Healthz](#install-service-fastify-healthz)
   - [Create an HTML Home Page](#create-an-html-home-page)
   - [Create a Static JSON API](#create-a-static-json-api)
-- List existing todos
-- Add an _AJV_ schema to the listing route
+- [List Existing Todos](#list-existing-todos)
+  - [List All Todos](#list-all-todos)
+  - [Limit the Response Size](#limit-the-response-size)
+  - [QueryString & Pagination](#querystring--pagination)
+  - [Filter By Todos Status](#filter-by-todos-status)
+  - [Search By Todos Title](#search-by-todos-title)
+  - [Schema and I/O Validation](#schema-and-io-validation)
 - Add a new todo
 - Add an _AJV_ schema to the new todo route
 - Scaffold the `todos-gql` Feature
@@ -753,15 +758,16 @@ module.exports = (request, reply) => {
 
 > Don't forget to add your Feature into the App's Manifest!
 
-## List Todos
+## List Existing Todos
 
 ### 🍿 Videos
 
 - [List existing todos (1:37)](./videos/todos-list.mp4)
 - [Limit the response size (2:14)](./videos/todos-response-size.mp4)
 - [QueryString & Pagination (1:11)](./videos/todos-pagination.mp4)
+- [Filter By Todos Status (1:48)](./videos/todos-filter.mp4)
 
-### List Existing Todos
+### List All Todos
 
 `service-pg` and `service-fastify` complete each others, and `service-pg` decorates Fastify's `request` object with a reference to the running connection pool:
 
@@ -820,7 +826,7 @@ const TODOS_QUERY = `
 const res = await request.pg.query(TODOS_QUERY, [pageSize, offset]);
 ```
 
-### Filters & Search
+### Filter By Todos Status
 
 First, we can add a `WHERE` clause to our query, and exploit the `ANY` construct:
 
@@ -835,7 +841,7 @@ Here you can get a few more details:
 - [node-postgres: how to execute "WHERE col IN (<dynamic value list>)" query?](https://stackoverflow.com/a/10829760/1308023)
 - [IN vs ANY operator in PostgreSQL](https://stackoverflow.com/questions/34627026/in-vs-any-operator-in-postgresql)
 
-Then, we can use a [ternary operator]() to neatly convert a querystring parameter into
+Then, we can use a [ternary operator](https://stackoverflow.com/questions/6259982/how-do-you-use-the-conditional-operator-in-javascript) to neatly convert a querystring parameter into
 a list of values that we can pass to the newly add filter:
 
 ```js
@@ -843,6 +849,8 @@ const filterStatus = request.query.status
   ? [request.query.status]
   : [true, false];
 ```
+
+## Search By Todos Title
 
 Now we can add the new filter condition, as to search for a portion of the title:
 
@@ -855,6 +863,64 @@ And use a default value for the related querystring parameter:
 ```js
 const searchTitle = request.query.title || "";
 ```
+
+### Schema and I/O Validation
+
+Fastify integrates [JSON Schema][jsonschema] validation using the [AJV][ajv] library.
+
+👉 [Here you can find the Fastify's documentation about it](https://www.fastify.io/docs/latest/Reference/Validation-and-Serialization/)
+
+I strongly suggest you ALWAYS apply schema-based validation to all your APIs inputs such as `body`, `query`, `params`, `headers`:
+
+```js
+module.exports = {
+  query: {
+    type: "object",
+    additionalProperties: false,
+    properties: {
+      page: {
+        type: "number",
+        default: 1,
+      },
+      status: {
+        type: "boolean",
+        nullable: true,
+      },
+      title: {
+        type: "string",
+        minLength: 4,
+      },
+    },
+  },
+};
+```
+
+But you can also provide output serialization informations such as:
+
+```js
+module.exports = {
+  response: {
+    200: {
+      type: "object",
+      properties: {
+        items: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              id: { type: "number" },
+              title: { type: "string" },
+              status: { type: "boolean" },
+            },
+          },
+        },
+      },
+    },
+  },
+};
+```
+
+This way, you gain declarative control over WHAT is sent out by your handlers, **decoupling the logic from the interface** of your endpoints.
 
 ---
 
@@ -870,3 +936,5 @@ const searchTitle = request.query.title || "";
 [nm]: https://nodemon.io/
 [fjs]: https://forrestjs.github.io
 [prettier]: https://prettier.io/
+[jsonschema]: https://json-schema.org/
+[ajv]: https://ajv.js.org/
