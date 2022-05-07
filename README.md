@@ -766,6 +766,7 @@ module.exports = (request, reply) => {
 - [Limit the response size (2:14)](./videos/todos-response-size.mp4)
 - [QueryString & Pagination (1:11)](./videos/todos-pagination.mp4)
 - [Filter By Todos Status (1:48)](./videos/todos-filter.mp4)
+- [Search By Todos Title (1:25)](./videos/todos-search.mp4)
 
 ### List All Todos
 
