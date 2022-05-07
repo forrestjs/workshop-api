@@ -1,0 +1,5 @@
+{
+  "$id": "/todos/field/title/v1",
+  "type": "string",
+  "minLength": 4
+}

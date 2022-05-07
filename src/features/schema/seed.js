@@ -20,6 +20,10 @@ module.exports = async ({ query }) => {
       "title" = EXCLUDED."title",
       "status" = EXCLUDED."status";
 
+    -- Reset the Todos sequence value:
+    LOCK TABLE "public"."todos" IN EXCLUSIVE MODE;
+    SELECT setval('todos_id_seq', COALESCE((SELECT MAX(id)+1 FROM "public"."todos"), 1), false);
+
     COMMIT;
   `);
 };

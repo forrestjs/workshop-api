@@ -1,0 +1,17 @@
+{
+  "$id": "/todos/response/list/v1",
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "number" },
+          "title": { "type": "string" },
+          "status": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}

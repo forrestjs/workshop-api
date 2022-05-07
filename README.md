@@ -47,8 +47,14 @@ Step by step video tutorial to using ForrestJS and build a REST and GraphQL API
   - [Filter By Todos Status](#filter-by-todos-status)
   - [Search By Todos Title](#search-by-todos-title)
   - [Schema and I/O Validation](#schema-and-io-validation)
-- Add a new todo
-- Add an _AJV_ schema to the new todo route
+- [Create Todos](#create-todos)
+  - [Consume The Request's Body](#consume-the-requests-body)
+  - [Validate The Request's Body](#validate-the-requests-body)
+  - [Failing The Insert Query](#failing-the-insert-query)
+  - [Fix The Seed Script](#fix-the-seed-script)
+  - [Insert Query With Returning Values](#insert-query-with-returning-values)
+  - [Serialize The New Todo](#serialize-the-new-todo)
+  - [Declare Schema Fragments](#declare-schema-fragments)
 - Scaffold the `todos-gql` Feature
 - List existing todos query
 - Add new todo mutation
@@ -923,6 +929,163 @@ module.exports = {
 ```
 
 This way, you gain declarative control over WHAT is sent out by your handlers, **decoupling the logic from the interface** of your endpoints.
+
+---
+
+## Create Todos
+
+### 🍿 Videos
+
+- [Consume The Request's Body (1:10)](./videos/add-todo-body.mp4)
+- [Validate The Request's Body (1:45)](./videos/add-todo-body-schema.mp4)
+- [Failing The Insert Query (1:22)](./videos/add-todo-insert-fails.mp4)
+- [Fix The Seed Script (1:12)](./videos/add-todo-insert-fixed.mp4)
+- [Insert Query With Returning Values (1:16)](./videos/add-todos-output.mp4)
+- [Serialize The New Todo (2:20)](./videos/add-todo-fastify-schema-fragments.mp4)
+- [Declare Schema Fragments (1:36)](./videos/add-todo-schema-fragment-refactoring.mp4)
+
+### Consume The Request's Body
+
+We need to define a new [Fastify Route](https://www.fastify.io/docs/latest/Reference/Routes/) by registering a new Action to a ForrestJS _Extension Point_:
+
+```js
+{
+  target: "$FASTIFY_ROUTE",
+  handler: {
+    method: "POST",
+    url: "/todos",
+    handler: createTodo,
+  },
+}
+```
+
+Next, we can scaffold the Route's Handler:
+
+```js
+module.exports = (request, reply) => {
+  console.log(request.body);
+  reply.send(request.body);
+};
+```
+
+### Validate The Request's Body
+
+Let's define a route's schema that validates the content of the `body` object:
+
+```js
+module.exports = {
+  body: {
+    type: "object",
+    additionalProperties: false,
+    required: ["title"],
+    properties: {
+      title: {
+        type: "string",
+        minLength: 4,
+      },
+    },
+  },
+};
+```
+
+### Failing The Insert Query
+
+The insert query that takes the `title` from the `request.body` is fairly simple:
+
+```sql
+INSERT INTO "public"."todos"
+  ( "title" )
+VALUES
+  ( $1 )
+```
+
+But it fails in case the sequence `todos_id_seq` (created by the `"id" SERIAL` statement in our schema build script) falls out of sync.
+
+### Fix The Seed Script
+
+It is a good idea to reset all the relevant sequences after a seeding activity:
+
+```sql
+LOCK TABLE "public"."todos" IN EXCLUSIVE MODE;
+SELECT setval('todos_id_seq', COALESCE((SELECT MAX(id)+1 FROM "public"."todos"), 1), false);
+```
+
+You can test this query by retrieving the next value from the serie:
+
+```sql
+SELECT "last_value" + 1 AS "nextval" FROM "todos_id_seq";
+```
+
+### Insert Query With Returning Values
+
+```sql
+INSERT INTO "public"."todos"
+  ( "title" )
+VALUES
+  ( $1 )
+RETURNING *
+```
+
+### Serialize The New Todo
+
+We can make the output of the Create Todo endpoint match the one we applied to the list:
+
+```js
+reply.send({ items: res.rows });
+```
+
+And we can add the `response.200` key into the `create.schema.js`:
+
+```js
+module.exports = {
+  body: {
+    type: "object",
+    ...
+  },
+
+  // Declare and Filter the JSON Output
+  response: {
+    200: {
+      type: "object",
+      ...
+    },
+  },
+};
+```
+
+### Declare Schema Fragments
+
+Todos response list:
+
+```json
+{
+  "$id": "/todos/response/list/v1",
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "number" },
+          "title": { "type": "string" },
+          "status": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}
+```
+
+Field title:
+
+```json
+{
+  "$id": "/todos/field/title/v1",
+  "type": "string",
+  "minLength": 4
+}
+```
 
 ---
 
