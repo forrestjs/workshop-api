@@ -8,9 +8,15 @@ module.exports = async (request, reply) => {
   const pageSize = request.getConfig("todos.page.size");
   const pageNum = request.query.page;
   const offset = (pageNum - 1) * pageSize;
-  const res = await request.pg.query(TODOS_QUERY, [pageSize, offset]);
 
-  reply.send({
-    items: res.rows,
-  });
+  try {
+    const res = await request.pg.query(TODOS_QUERY, [pageSize, offset]);
+
+    reply.send({
+      items: res.rows,
+    });
+  } catch (err) {
+    console.log(err);
+    reply.send(err);
+  }
 };

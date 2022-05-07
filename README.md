@@ -757,13 +757,16 @@ module.exports = (request, reply) => {
 
 ### 🍿 Videos
 
-- [List existing todos (1:08)](./videos/service-fastify.mp4)
+- [List existing todos (1:37)](./videos/todos-list.mp4)
+- [Limit the response size (2:14)](./videos/todos-response-size.mp4)
+- [QueryString & Pagination (1:11)](./videos/todos-pagination.mp4)
 
 ### List Existing Todos
 
 `service-pg` and `service-fastify` complete each others, and `service-pg` decorates Fastify's `request` object with a reference to the running connection pool:
 
 ```js
+const TODOS_QUERY = `SELECT * FROM "public"."todos"`;
 const res = await request.pg.query(TODOS_QUERY);
 ```
 
@@ -777,7 +780,8 @@ const TODOS_QUERY = `
   LIMIT $1
 `;
 
-await request.pg.query(TODOS_QUERY, [5]);
+const pageSize = 5;
+await request.pg.query(TODOS_QUERY, [pageSize]);
 ```
 
 And _ForrestJS Fastify Service_ provides a simple API to access your [App's configuration](https://forrestjs.github.io/api/app-config/):
@@ -788,7 +792,69 @@ const pageSize = request.getConfig("todos.page.size");
 
 This way, you can move all the **magic numbers** away from the implementation, and centralize them at configuration level, or even better, at environment validation level.
 
-### The Query Object & Pagination
+### QueryString & Pagination
+
+Fastify let you consume the _querystring_ parameters by accessing `request.query.xxx`:
+
+```js
+const pageNum = request.query.page;
+```
+
+With this information, we can calculate `LIMIT` and `OFFSET` for the pagination:
+
+```js
+const pageSize = request.getConfig("todos.page.size");
+const pageNum = request.query.page;
+const offset = (pageNum - 1) * pageSize;
+```
+
+That we can add as new parameters to the query:
+
+```js
+const TODOS_QUERY = `
+  SELECT * FROM "public"."todos"
+  LIMIT $1
+  OFFSET $2
+`;
+
+const res = await request.pg.query(TODOS_QUERY, [pageSize, offset]);
+```
+
+### Filters & Search
+
+First, we can add a `WHERE` clause to our query, and exploit the `ANY` construct:
+
+```sql
+WHERE "status" = ANY($3)
+```
+
+this is the neat trick we can use to convert a _parametric array_ into a **typed set of values** that Postgres can use.
+
+Here you can get a few more details:
+
+- [node-postgres: how to execute "WHERE col IN (<dynamic value list>)" query?](https://stackoverflow.com/a/10829760/1308023)
+- [IN vs ANY operator in PostgreSQL](https://stackoverflow.com/questions/34627026/in-vs-any-operator-in-postgresql)
+
+Then, we can use a [ternary operator]() to neatly convert a querystring parameter into
+a list of values that we can pass to the newly add filter:
+
+```js
+const filterStatus = request.query.status
+  ? [request.query.status]
+  : [true, false];
+```
+
+Now we can add the new filter condition, as to search for a portion of the title:
+
+```sql
+AND ($4 = '' IS TRUE OR "title" ILIKE $4)
+```
+
+And use a default value for the related querystring parameter:
+
+```js
+const searchTitle = request.query.title || "";
+```
 
 ---
 
