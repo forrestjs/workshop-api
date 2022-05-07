@@ -23,6 +23,10 @@ const env = envalid.cleanEnv(process.env, {
     desc: "PostgreSQL Connection String",
     default: "postgres://postgres:postgres@localhost:5432/postgres",
   }),
+  TODO_PAGE_SIZE: envalid.num({
+    desc: "Todos list max response size",
+    default: 2,
+  }),
 });
 
 // Kick off a ForrestJS App
@@ -42,6 +46,11 @@ const app = forrestjs.run({
     fastify: {
       static: {
         root: path.join(__dirname, "html"),
+      },
+    },
+    todos: {
+      page: {
+        size: env.TODO_PAGE_SIZE,
       },
     },
   },
