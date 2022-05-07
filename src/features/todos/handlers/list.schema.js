@@ -12,30 +12,12 @@ module.exports = {
         type: "boolean",
         nullable: true,
       },
-      title: {
-        type: "string",
-        minLength: 4,
-      },
+      title: { $ref: "/todos/field/title/v1" },
     },
   },
 
   // Declare and Filter the JSON Output
   response: {
-    200: {
-      type: "object",
-      properties: {
-        items: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              id: { type: "number" },
-              title: { type: "string" },
-              status: { type: "boolean" },
-            },
-          },
-        },
-      },
-    },
+    200: { $ref: "/todos/response/list/v1" },
   },
 };

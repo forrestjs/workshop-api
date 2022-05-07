@@ -1043,6 +1043,38 @@ module.exports = {
 
 ### Declare Schema Fragments
 
+Todos response list:
+
+```json
+{
+  "$id": "/todos/response/list/v1",
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "number" },
+          "title": { "type": "string" },
+          "status": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}
+```
+
+Field title:
+
+```json
+{
+  "$id": "/todos/field/title/v1",
+  "type": "string",
+  "minLength": 4
+}
+```
+
 ---
 
 [dk]: https://www.docker.com/get-started
