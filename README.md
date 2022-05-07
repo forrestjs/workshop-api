@@ -926,6 +926,48 @@ This way, you gain declarative control over WHAT is sent out by your handlers, *
 
 ---
 
+## Create Todos
+
+### 🍿 Videos
+
+- [List existing todos (1:37)](./videos/todos-list.mp4)
+
+### Consume The Request's Body
+
+We need to define a new [Fastify Route](https://www.fastify.io/docs/latest/Reference/Routes/) by registering a new Action to a ForrestJS _Extension Point_:
+
+```js
+{
+  target: "$FASTIFY_ROUTE",
+  handler: {
+    method: "POST",
+    url: "/todos",
+    handler: createTodo,
+  },
+}
+```
+
+Next, we can scaffold the Route's Handler:
+
+```js
+module.exports = (request, reply) => {
+  console.log(request.body);
+  reply.send(request.body);
+};
+```
+
+### Validate The Request's Body
+
+### Failing The Insert Query
+
+### Fix The Seed Script
+
+### Insert Query With Returning Values
+
+### Serialize The New Todo
+
+---
+
 [dk]: https://www.docker.com/get-started
 [dkc]: https://docs.docker.com/compose/
 [pg]: https://www.postgresql.org/
