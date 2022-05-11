@@ -173,7 +173,7 @@ Once you go through, you can then structure your project this way:
 
 ### 🍿 Videos
 
-- [Walk Through a ForrestJS Project Structure (4:43)](./videos/folder-structure.mp4)
+- [Walk Through a ForrestJS Project Structure (3:26)](./videos/folder-structure.mp4)
 
 ### The Project's Root
 
