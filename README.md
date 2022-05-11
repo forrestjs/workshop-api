@@ -235,9 +235,9 @@ A **Service** represents a bit of infrastructural value, something that _YOU_ ne
 
 ### 🍿 Videos
 
-- [Install dependencies from NPM (1:13)](./videos/run-forrest-add-dependencies.mp4)
-- [Create a Start Script (1:27)](./videos/run-forrest-npm-start.mp4)
-- [Start your first ForrestJS App (1:46)](./videos/run-forrest-start.mp4)
+- [Install dependencies from NPM (1:14)](./videos/run-forrest-add-dependencies.mp4)
+- [Create a Start Script (1:28)](./videos/run-forrest-npm-start.mp4)
+- [Start your first ForrestJS App (1:50)](./videos/run-forrest-start.mp4)
 
 ### Add ForrestJS and Nodemon
 
