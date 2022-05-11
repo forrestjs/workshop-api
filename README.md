@@ -91,9 +91,9 @@ We can run both services using [Docker-Compose][dkc] and make the commands a bit
 
 ### 🍿 Videos
 
-- [Setup Postgres With Docker (3:12)](./videos/docker-compose-postgres.mp4)
-- [Login to the Adminer web interface (1:33)](./videos/docker-compose-adminer.mp4)
-- [Access PSQL from your Terminal (1:09)](./videos/docker-compose-psql.mp4)
+- [Setup Postgres With Docker (2:21)](./videos/docker-compose-postgres.mp4)
+- [Login to the Adminer web interface (1:39)](./videos/docker-compose-adminer.mp4)
+- [Access PSQL from your Terminal (1:16)](./videos/docker-compose-psql.mp4)
 
 ### Project's API
 
@@ -173,7 +173,7 @@ Once you go through, you can then structure your project this way:
 
 ### 🍿 Videos
 
-- [Walk Through a ForrestJS Project Structure (4:43)](./videos/folder-structure.mp4)
+- [Walk Through a ForrestJS Project Structure (3:26)](./videos/folder-structure.mp4)
 
 ### The Project's Root
 
