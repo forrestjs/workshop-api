@@ -347,7 +347,7 @@ And verifying that all the cranky settings are correctly passed to your App is t
 
 ### 🍿 Videos
 
-- [Why do you need to validate your environment? (1:33)](./videos/envalid-intro.mp4)
+- [Why do you need to validate your environment? (1:34)](./videos/envalid-intro.mp4)
 - [Install Envalid & Scaffold the Environment validation (1:58)](./videos/envalid-install.mp4)
 - [Validate NODE_ENV (2:41)](./videos/envalid-node-env.mp4)
 - [Validate PGSTRING (1:15)](./videos/envalid-pgstring.mp4)
