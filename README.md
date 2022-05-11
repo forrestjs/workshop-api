@@ -328,7 +328,7 @@ And finally activate the on-save hook in your [VSCode][vscode] settings `.vscode
 
 ### 🍿 Videos
 
-- [Setup Prettier (2:04)](./videos/prettier.mp4)
+- [Setup Prettier (2:07)](./videos/prettier.mp4)
 
 ---
 
